@@ -1,0 +1,43 @@
+{% extends "articles/index3.html" %}
+{% block content %}
+{% load staticfiles %}
+	
+	<div class="container-fluid side-nav">
+		<div class="row side-nav">
+		<div class="col-lg-2 fill side-nav">
+			{% for item in site_list %}
+				<div class="cell">
+					{% if item.category_id == 1 %}
+						<a href="{% url "cat" %}{{ item.pk }}/">{{ item.name }}</a>
+					{% else %}
+						<a href="{% url "index" %}online-banking/{{ item.pk }}/">{{ item.name }}</a>
+					{% endif %}
+				</div>
+			{% endfor %}
+		</div>
+		<div class="col-lg-10">
+				<div class="col-lg-2 higher">
+						<img class="higher" src="{{ MEDIA_URL }}{{ site_review.review_img }}" />
+						<ul>
+						{% for item in features %}
+							<li class="higher">{% if item.has_feature == True %}<img src="{% static "img/checkmark.png" %}" class="check" />{% endif %}{{ item.feature }}</li>
+						{% endfor %}
+						</ul>
+				</div>
+			
+				<div class="col-lg-5 padded">
+					<h2>{{ site_review.name }}</h2>
+					<p>{{ site_review.site_description|safe }}</p>
+				</div>
+				
+				<!-- Banners
+    			============================================= -->
+    			<div class="col-lg-3">
+    				
+    			</div>
+			</div>
+
+{% endblock %}
+
+
+

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+    
+    <link href="{% static "css/carousel.css" %}" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  	<div class="container-fluid side-nav">
+  		<div class="nav-container">
+  			<div class="navbar navbar-inverse navbar-fixed-top shady" role="navigation">
+      			<div class="container">
+        			<div class="navbar-header">
+          				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            				<span class="sr-only">Toggle navigation</span>
+            				<span class="icon-bar"></span>
+            				<span class="icon-bar"></span>
+            				<span class="icon-bar"></span>
+          				</button>
+         				<a class="navbar-brand" href="{% url 'index' %}">GoldenBonus</a>
+        			</div>
+        			<div class="collapse navbar-collapse">
+          				<ul class="nav navbar-nav">
+          					{% for item in categories %}
+								<li><a href="{% url "index" %}{{ item.slug }}/">{{ item.name }}</a></li>
+							{% endfor %}
+          				</ul>
+        			</div><!--/.nav-collapse -->
+      			</div>
+    		</div>
+  		</div>
+  	{% block content %}	 
+    <!-- Carousel
+    ================================================== -->
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+      	{% if slides_list %}
+			{% for slide in slides_list %}
+        		{% if forloop.first %}<div class="item active">{% endif %}
+        		{% if not forloop.first %}<div class="item">{% endif %}
+        			<img src="{{ MEDIA_URL }}{{ slide.banner_image }}" alt="First slide">
+          			<div class="container-fluid">
+           				<div class="carousel-caption">
+              				<p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+           				</div>
+          			</div>
+        		</div>
+        	{% endfor %}
+        {% endif %}
+        </div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    </div><!-- /.carousel -->
+    
+    <!-- Top 3 Sites
+    ==================================================== -->
+    <div class="container full">
+    <div class="container marketing">
+    	<div class="row">
+    	{% if top3_banner_list %}
+			{% for top_banner in top3_banner_list %}
+        		<div class="col-lg-4">
+        			<h3>{{ top_banner.site.name }}</h3>
+    				<a href="{{ top_banner.site.url }}"><img src="{{ MEDIA_URL }}{{ top_banner.banner_image }}" /></a>
+    				<p>{{ top_banner.short_text }}</p>
+    				<div class="row">
+    						<a class="btn btn-primary btn-md" href="{% url 'index' %}sportsbook/{{ top_banner.site_id }}/">Read Review.</a>
+    						<a class="btn btn-primary btn-md" href="{{ top_banner.site.url }}">Bet Now.</a>
+    				</div>
+    			</div>
+    		{% endfor %}
+    	{% endif %}
+    	</div>
+    </div>
+    
+    <!-- /.Top 3 Sites -->
+    
+    <!-- Articles 
+    ============================================= -->
+    <div class="container articles_con">
+    	<div class="row">
+    	<div class="col-lg-9">
+    	<h2>LATEST ARTICLES</h2>
+    	{% if latest_article_list %}
+			{% for article in latest_article_list %}
+				<div class="row">
+					<div class="col-lg-12"><h3>{{ article.article_headline }}</h3></div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12"><p>by: {{ article.author }} on {{ article.date_published }}</p></div>
+				</div>
+				<div class="row">
+					<!--<a href="{% url 'index' %}{{ article.pk }}/"><img src="{{ MEDIA_URL }}{{ article.article_image }}" /></a>-->
+					<div class="col-lg-12"><p class="main-content">{{ article.article_text|truncatewords:70 }}</p></div>
+				</div>
+				<div class="row">
+				<p class="pull-right">	
+					<div class="col-lg-12"><a class="btn btn-primary btn-md pull-right" href="{% url 'index' %}{{ article.pk }}/">Read more >></a></div>
+				</p>
+				</div>
+			{% endfor %}	
+		{% endif %}
+    	</div>
+    
+    <!-- /.Articles -->
+    <!-- Banners
+    ============================================= -->
+	<div class="col-md-3">
+    	{% if small_banner_list %}
+			{% for banner in small_banner_list %}
+				<a href="{{ banner.site.url }}"><img src="{{ MEDIA_URL }}{{ banner.banner_image }}" /></a>
+			{% endfor %}
+		{% endif %}
+	</div>
+	
+    </div>
+    
+    </div>
+    {% endblock %}
+    </div>
+    
+    <footer>
+    	<div class="container footy">
+    		<div class="row">
+    			<div class="col-lg-2"><a href="#">Privacy Policy</a></div>
+    			<div class="col-lg-2"><a href="#">Terms of Service</a></div>
+    			<div class="col-lg-2"><a href="#">Responsible Gambling</a></div>
+    		</div>
+    	</div>
+    </footer>
+    
+    <!-- /.Banners -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    
+    <script src="{% static "js/jquery.flexslider.js" %}"></script>
+ 	<script>
+  		$(document).ready(function () {
+			$('.flexslider').flexslider({
+				animation: 'fade',
+				controlsContainer: '.flexslider'
+			});
+		});
+  	</script>
+  </body>
+</html>

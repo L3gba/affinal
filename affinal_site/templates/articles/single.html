@@ -1,0 +1,13 @@
+{% extends "articles/index3.html" %}
+{% block content %}
+	{% if single_article %}
+		<div class="container full">
+			<div class="row">
+				<h2>{{ single_article.article_headline }}</h2><p>{{ single_article.author }} on {{ single_article.date_published }}</p>
+			</div>
+			<div class="row">
+				<p>{{ single_article.article_text|safe }}</p>
+			</div>
+		</div>
+	{% endif %}
+{% endblock %}

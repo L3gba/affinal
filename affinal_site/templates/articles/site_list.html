@@ -1,0 +1,26 @@
+{% extends "articles/index.html" %}
+{% block content %}
+
+	
+	<div id="sub-page-container">
+		<div id="sub-page-menu-container">
+			{% for item in sportsbook_list %}
+				<div class="cell">
+					<a href="{{ item.pk }}">{{ item.name }}</a>
+				</div>
+			{% endfor %}
+		</div>
+
+{% endblock %}
+{% block reviews %}
+	<div id="sub-page-promo-bar">
+			
+	</div>		
+				
+				
+{% endblock %}
+</div>
+		
+		
+	
+

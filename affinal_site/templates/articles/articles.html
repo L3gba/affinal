@@ -1,0 +1,34 @@
+{% extends "articles/index3.html" %}
+{% block content %}
+	<div class="container articles_con">
+		<div class="row">
+			<div class="col-lg-9">
+				{% for article in latest_articles %}
+					<div class="row article">
+						<div class="col-md-12">
+							<h3>{{ article.article_headline }}</h3>
+							<p>by: {{ article.author }} on {{ article.date_published }}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<!--<a href="{% url 'index' %}{{ article.pk }}/"><img src="{{ MEDIA_URL }}{{ article.article_image }}" /></a>-->
+							<p>{{ article.article_text|truncatewords:150|safe }}</p>
+							<a class="btn btn-primary btn-md pull-right" href="{% url 'index' %}{{ article.pk }}/">Read more >></a>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			<div class="col-md-3">
+    		{% if small_banner_list %}
+				{% for banner in small_banner_list %}
+					<a href="{{ banner.site.url }}"><img src="{{ MEDIA_URL }}{{ banner.banner_image }}" /></a>
+				{% endfor %}
+			{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+
+
